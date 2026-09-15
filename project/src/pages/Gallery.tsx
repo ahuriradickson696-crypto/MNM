@@ -37,7 +37,7 @@ export function Gallery() {
             Photos &amp; <em>videos</em>
           </>
         }
-        subtitle="Campus life, academics, graduation and admissions moments — photos from AVIU and official TikTok from @avancestudentpulse, @avance.marketing and partners."
+        subtitle="Photos and TikTok videos from AVIU campus life."
       />
 
       <section className="section-pad">

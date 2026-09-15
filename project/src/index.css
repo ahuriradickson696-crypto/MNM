@@ -3311,3 +3311,210 @@ h1 em, h2 em, h3 em { color: var(--purple-500); font-style: italic; }
     margin-right: auto;
   }
 }
+
+
+/* Floating YouTube — draggable like WhatsApp FAB */
+.yt-floating {
+  position: fixed;
+  z-index: 9990;
+  width: min(300px, calc(100vw - 24px));
+  background: #1a0d2e;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  overflow: hidden;
+  color: #fff;
+  touch-action: none;
+  user-select: none;
+}
+.yt-floating-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: #2d1454;
+  cursor: grab;
+}
+.yt-floating-bar:active { cursor: grabbing; }
+.yt-floating-title {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+}
+.yt-floating-bar button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  padding: 4px;
+  cursor: pointer;
+  opacity: .85;
+  display: flex;
+}
+.yt-floating-bar button:hover { opacity: 1; }
+.yt-drag-handle { display: flex; opacity: .7; }
+.yt-floating-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+}
+.yt-floating-player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.yt-floating-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  justify-content: center;
+}
+.yt-floating-tabs button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.3);
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.yt-floating-tabs button.is-active {
+  background: #c9a14a;
+  border-color: #c9a14a;
+  color: #1a0d2e;
+}
+.yt-floating-hint {
+  font-size: 10px;
+  text-align: center;
+  opacity: .65;
+  margin: 0 0 8px;
+  padding: 0 8px;
+}
+.yt-floating.is-collapsed {
+  width: auto;
+  min-width: 160px;
+}
+.yt-fab-show {
+  position: fixed;
+  z-index: 9990;
+  bottom: 88px;
+  left: 16px;
+  background: #2d1454;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* Partners with images */
+.partner-card-media {
+  text-align: left;
+  overflow: hidden;
+}
+.partner-img-wrap {
+  width: 100%;
+  aspect-ratio: 16/10;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: var(--purple-100);
+}
+.partner-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.partner-desc {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 6px 0 0;
+  line-height: 1.45;
+}
+
+/* Mobile announcement / ads bar */
+.announcement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.announcement-text {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.announcement-home-btn {
+  flex-shrink: 0;
+  background: rgba(255,255,255,.2);
+  border: 1px solid rgba(255,255,255,.35);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  .announcement {
+    padding: 8px 12px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  .announcement-date {
+    display: none;
+  }
+  .announcement-divider {
+    display: none;
+  }
+  .announcement-text {
+    font-size: 12px;
+    animation: ads-scroll 12s linear infinite;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+    display: inline-block;
+  }
+  .announcement {
+    overflow: hidden;
+  }
+  @keyframes ads-scroll {
+    0% { transform: translateX(8%); }
+    100% { transform: translateX(-100%); }
+  }
+  .yt-floating {
+    width: min(260px, calc(100vw - 20px));
+  }
+  .partners-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+/* Hero / carousel images fill space */
+.hero-carousel img,
+.page-hero img,
+.bg-carousel img,
+.background-carousel img {
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Clean TikTok — no extra chrome */
+.tiktok-clean {
+  min-height: 480px;
+}
+.tiktok-gallery-card {
+  padding: 8px !important;
+}

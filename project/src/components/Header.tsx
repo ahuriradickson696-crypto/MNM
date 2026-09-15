@@ -6,27 +6,14 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { useApply } from '@/components/ApplyContext';
 
 const announcements = [
-  '🎓 AVIU Annual Graduation — every 25 September. All faculties. Families & international guests welcome',
-  'Admissions open: January · May · August · September intakes — Apply Now',
-  '25 NCHE-accredited bachelor programmes only — search & download the full catalogue',
-  'International students: visa guidance, free airport pickup & English-medium instruction',
-  'Faculty of Education · Business · Computing & IT · Nursing & Health · Arts & Social Sciences',
-  'AVIU Innovation Fair 2026: 15 September — student projects on display',
-  'Open Day for prospective & international students: 25 October 2026 — register now',
-  'Annual Research Conference: 5 October — faculty and student presentations',
-  'Student Startup Pitch Competition: 8 November — entrepreneurs of East Africa',
-  'Community Engagement Day: 12 October — service across Kampala & Wakiso',
-  'Nursing simulation lab open for clinical skills practice — School of Nursing & Health Sciences',
-  'IELTS 6.0 / TOEFL 80 / PTE 50 accepted for international admission',
-  'Credit transfer & Recognition of Prior Learning (RPL) available — up to 50% of credits',
-  'On-campus residence with Wi-Fi, utilities & 24/7 security — enquire early',
-  '20+ student clubs: debate, drama, football, innovation, peer mentoring',
-  'Free airport pickup for new international students on designated intake dates',
-  'Fees & bursaries: Coming Soon — contact admissions@aviu.ac.ug for guidance',
-  '2,000+ students · 100+ faculty · NCHE · ASIC · ISO 9001:2015',
-  'Mature Age Entry Scheme for applicants aged 21 and above',
-  'E-learning platform with live classes and on-demand lessons for flexible study',
-  'Apply online — enquiries go directly to Admissions (admissions@aviu.ac.ug)',
+  'Applications open — January, May, August & September intakes',
+  'Graduation Day: 25 September every year — all faculties',
+  '25 NCHE-accredited bachelor programmes · Nabweru, Wakiso',
+  'International students welcome — visa guidance available',
+  'Nursing & midwifery pathways — contact Admissions for current intake',
+  'Education programmes for future teachers — school practice included',
+  'Visit campus: Nabweru, Wakiso · +256 700 670 691',
+  'Follow AVIU on TikTok @avancestudentpulse · @avance.marketing',
 ];
 
 type NavGroup = {
@@ -41,11 +28,10 @@ const navGroups: NavGroup[] = [
       { label: 'All Programmes', path: '/study' },
       { label: 'Undergraduate', path: '/study/undergraduate' },
       { label: 'Postgraduate & Doctoral', path: '/study/postgraduate' },
-      { label: 'Online & E-Learning', path: '/study/online' },
-      { label: 'E-Learning Portal', path: '/elearning' },
+      { label: 'Online learning info', path: '/study/online' },
       { label: 'International Study', path: '/study/international' },
       { label: 'Course Finder', path: '/study/course-finder' },
-      { label: 'Fees & Tuition', path: '/fees' },
+      { label: 'Fees (Coming Soon)', path: '/fees' },
     ],
   },
   {
@@ -65,7 +51,7 @@ const navGroups: NavGroup[] = [
     items: [
       { label: 'Research Overview', path: '/research' },
       { label: 'Research Centres', path: '/research/centres' },
-      { label: 'PhD Opportunities', path: '/research/phd-opportunities' },
+      { label: 'PhD (Coming Soon)', path: '/research/phd-opportunities' },
       { label: 'Publications & Repository', path: '/research/publications' },
     ],
   },
@@ -119,6 +105,9 @@ export function Header() {
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const [currentDate, setCurrentDate] = useState('');
   const { path, navigate } = useRouter();
+  const goHome = () => navigate('/');
+  const isHome = path === '/' || path === '';
+
   const { openApply } = useApply();
 
   useEffect(() => {
@@ -155,6 +144,11 @@ export function Header() {
         <span className="announcement-date">{currentDate}</span>
         <span className="announcement-divider" />
         <span className="announcement-text" key={announcementIndex}>{announcements[announcementIndex]}</span>
+        {!isHome && (
+          <button type="button" className="announcement-home-btn" onClick={goHome} aria-label="Go to home page">
+            Home
+          </button>
+        )}
         <button onClick={openApply}>Apply now</button>
       </div>
       <header
@@ -176,6 +170,7 @@ export function Header() {
           </span>
         </a>
         <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`}>
+          <button type="button" className="nav-home-item" onClick={() => go('/')} style={{ fontWeight: 700, marginRight: 8 }}>Home</button>
           {navGroups.map((group) => (
             <div
               className="nav-group"

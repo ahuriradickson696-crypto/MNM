@@ -1,10 +1,9 @@
-import { lazy, Suspense } from 'react';
 import { RouterProvider, useRouter } from '@/router/Router';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ApplyProvider } from '@/components/ApplyContext';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
-import { AutoPlayVideos } from '@/components/AutoPlayVideos';
+import { FloatingYouTube } from '@/components/FloatingYouTube';
 import { DocumentHead } from '@/components/DocumentHead';
 import { NotFound } from '@/pages/NotFound';
 import { Terms } from '@/pages/Terms';
@@ -61,7 +60,6 @@ import { Gallery } from '@/pages/Gallery';
 import { AcademicCalendar } from '@/pages/AcademicCalendar';
 import { Privacy } from '@/pages/Privacy';
 import { Downloads } from '@/pages/Downloads';
-const ElearningApp = lazy(() => import('@/elearning/ElearningApp').then(m => ({ default: m.ElearningApp })));
 
 function Routes() {
   const { path } = useRouter();
@@ -172,21 +170,13 @@ function Routes() {
     }
   };
 
-  if (path === '/elearning' || path.startsWith('/elearning/')) {
-    return (
-      <Suspense fallback={<div style={{padding:40,textAlign:'center'}}>Loading e-learning…</div>}>
-        <ElearningApp />
-      </Suspense>
-    );
-  }
-
   return (
     <div className="site-shell">
       <DocumentHead />
       <a href="#main-content" className="skip-to-content">Skip to main content</a>
       <Header />
       <main id="main-content">{renderPage()}</main>
-      <AutoPlayVideos />
+      <FloatingYouTube />
       <Footer />
       <WhatsAppButton />
       <CookieConsent />

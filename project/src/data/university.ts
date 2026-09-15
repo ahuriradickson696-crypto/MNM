@@ -1337,15 +1337,47 @@ export const admissionFAQs: FAQItem[] = [
 export type PartnerItem = {
   name: string;
   type: string;
+  image: string;
+  description: string;
 };
 
 export const partners: PartnerItem[] = [
-  { name: 'Regional Health Authority', type: 'Healthcare Partnership' },
-  { name: 'Pearson Edexcel', type: 'Academic Accreditation' },
-  { name: 'ASIC', type: 'Institutional Accreditation' },
-  { name: 'NCHE Uganda', type: 'National Accreditation' },
-  { name: 'Uganda Bankers Association', type: 'Industry Partnership' },
-  { name: 'Kampala City Council', type: 'Community Partnership' },
+  {
+    name: 'NCHE Uganda',
+    type: 'National Accreditation',
+    image: '/images/mou-signing.jpg',
+    description: 'National Council for Higher Education — accreditation of AVIU programmes.',
+  },
+  {
+    name: 'Regional Health Authority',
+    type: 'Healthcare Partnership',
+    image: '/images/medical-facility-tour.jpg',
+    description: 'Clinical placement pathways for nursing and health sciences students.',
+  },
+  {
+    name: 'ASIC',
+    type: 'Institutional Accreditation',
+    image: '/images/partnership-bathspa.jpg',
+    description: 'International quality assurance and institutional recognition.',
+  },
+  {
+    name: 'Pearson Edexcel',
+    type: 'Academic Partnership',
+    image: '/images/conference-audience.jpg',
+    description: 'Academic standards and curriculum alignment support.',
+  },
+  {
+    name: 'Industry & Banking Partners',
+    type: 'Industry Partnership',
+    image: '/images/board-meeting.jpg',
+    description: 'Links for business, finance and professional practice exposure.',
+  },
+  {
+    name: 'Community & Local Government',
+    type: 'Community Partnership',
+    image: '/images/staff-booth.jpg',
+    description: 'Outreach, placements and community engagement in Wakiso and beyond.',
+  },
 ];
 
 export type NavLink = { label: string; path: string };
