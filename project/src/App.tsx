@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { RouterProvider, useRouter } from '@/router/Router';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -56,11 +57,11 @@ import { OrgChart } from '@/pages/about/OrgChart';
 
 import { Directory } from '@/pages/contact/Directory';
 import { CampusSafety } from '@/pages/contact/CampusSafety';
-import { ElearningApp } from '@/elearning/ElearningApp';
 import { Gallery } from '@/pages/Gallery';
 import { AcademicCalendar } from '@/pages/AcademicCalendar';
 import { Privacy } from '@/pages/Privacy';
 import { Downloads } from '@/pages/Downloads';
+const ElearningApp = lazy(() => import('@/elearning/ElearningApp').then(m => ({ default: m.ElearningApp })));
 
 function Routes() {
   const { path } = useRouter();
@@ -172,7 +173,11 @@ function Routes() {
   };
 
   if (path === '/elearning' || path.startsWith('/elearning/')) {
-    return <ElearningApp />;
+    return (
+      <Suspense fallback={<div style={{padding:40,textAlign:'center'}}>Loading e-learning…</div>}>
+        <ElearningApp />
+      </Suspense>
+    );
   }
 
   return (
