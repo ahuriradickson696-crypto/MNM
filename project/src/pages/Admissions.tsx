@@ -5,6 +5,8 @@ import { admissionFAQs } from '@/data/university';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
 import { useApply } from '@/components/ApplyContext';
+import { TikTokStrip } from '@/components/TikTokEmbed';
+import { tiktoksByCategory } from '@/data/galleryMedia';
 
 const steps = [
   {
@@ -61,7 +63,7 @@ export function Admissions() {
     <div className="page-content">
       <PageHero
         images={pageImages.admissions}
-        eyebrow="Join AIU"
+        eyebrow="Join AVIU"
         title={<>Begin your <em>application.</em></>}
         subtitle="We welcome students from all backgrounds. Our admissions process is straightforward, transparent, and designed to help you find the right fit. We offer three intakes per year: January, May, and August."
       />
@@ -206,6 +208,12 @@ export function Admissions() {
           ))}
         </div>
       </section>
+
+      <TikTokStrip
+        items={tiktoksByCategory('admissions')}
+        title={<>Welcome &amp; <em>admissions</em> videos.</>}
+        subtitle="Freshers welcome, education pathways, nursing intakes — from @avance.marketing and student pulse."
+      />
 
       <section className="cta-section">
         <BackgroundCarousel images={pageImages.admissions} overlay={0.88} />

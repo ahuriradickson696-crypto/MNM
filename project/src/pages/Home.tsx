@@ -6,6 +6,8 @@ import { useApply } from '@/components/ApplyContext';
 import { Carousel, type CarouselSlide } from '@/components/Carousel';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
+import { TikTokStrip } from '@/components/TikTokEmbed';
+import { galleryTikToks } from '@/data/galleryMedia';
 
 const campusImage = '/images/campus-building.jpg';
 const studentsImage = '/images/classroom-students.jpg';
@@ -100,7 +102,7 @@ export function Home() {
               <span className="play">
                 <Play size={13} fill="currentColor" />
               </span>
-              See AIU in action
+              See AVIU in action
             </a>
           </div>
           <div className="hero-note">
@@ -134,7 +136,6 @@ export function Home() {
       </section>
 
       <section className="stats-strip">
-        <BackgroundCarousel images={pageImages.home} overlay={0.9} />
         {homeStats.map((stat) => (
           <div className="stat-item" key={stat.label}>
             <stat.icon size={22} strokeWidth={1.5} />
@@ -164,7 +165,7 @@ export function Home() {
               navigate('/about');
             }}
           >
-            Discover the AIU experience <ArrowRight size={16} />
+            Discover the AVIU experience <ArrowRight size={16} />
           </a>
         </div>
         <div className="feature-grid">
@@ -315,7 +316,7 @@ export function Home() {
               <span className="eyebrow-line" /> Latest news
             </div>
             <h2>
-              What's happening at <em>AIU.</em>
+              What's happening at <em>AVIU.</em>
             </h2>
           </div>
           <a
@@ -406,6 +407,32 @@ export function Home() {
           ))}
         </div>
       </section>
+
+      
+      <section className="section-pad" style={{ paddingTop: 0, paddingBottom: 0 }}>
+        <div className="elearn-banner">
+          <div>
+            <h3>Study on your phone</h3>
+            <p>
+              Use the AVIU E-Learning Portal for classes, materials, and results — built to work on mobile.
+            </p>
+          </div>
+          <a
+            className="btn-light"
+            href="/elearning" onClick={(e) => { e.preventDefault(); navigate('/elearning'); }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open E-Learning Portal
+          </a>
+        </div>
+      </section>
+
+      <TikTokStrip
+        items={galleryTikToks.filter((t) => ['campus', 'admissions', 'graduation'].includes(t.category)).slice(0, 4)}
+        title={<>Campus life on <em>TikTok.</em></>}
+        subtitle="Watch student pulse, welcomes and graduation moments from official AVIU channels."
+      />
 
       <section className="cta-section">
         <BackgroundCarousel images={pageImages.home} overlay={0.88} />

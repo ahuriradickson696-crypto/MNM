@@ -5,6 +5,8 @@ import { PageHero } from '@/components/PageHero';
 import { useRouter } from '@/router/Router';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
+import { TikTokStrip } from '@/components/TikTokEmbed';
+import { tiktoksByCategory } from '@/data/galleryMedia';
 
 export function Events() {
   const { navigate } = useRouter();
@@ -138,6 +140,12 @@ export function Events() {
           </div>
         </div>
       </section>
+
+      <TikTokStrip
+        items={tiktoksByCategory('graduation')}
+        title={<>Graduation on <em>video.</em></>}
+        subtitle="Relive the 4th Graduation ceremony and celebration moments."
+      />
 
       <section className="cta-section">
         <BackgroundCarousel images={pageImages.events} overlay={0.88} />
