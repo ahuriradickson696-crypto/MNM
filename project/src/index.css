@@ -5510,3 +5510,92 @@ textarea {
   color: #8a7a9e;
   text-transform: capitalize;
 }
+
+/* ========== Navigation reliability (all devices) ========== */
+@media (min-width: 701px) {
+  .main-nav {
+    display: flex !important;
+    position: static !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    inset: auto !important;
+    width: auto !important;
+  }
+  .nav-logo-bg,
+  .nav-mobile-brand {
+    display: none !important;
+  }
+  .nav-mobile-panel {
+    display: contents !important;
+  }
+  .nav-home-item {
+    display: inline-flex !important;
+    margin-right: 8px;
+    background: transparent;
+    border: 0;
+    font-weight: 700;
+    color: var(--purple-800);
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .nav-dropdown {
+    display: block !important;
+    position: absolute !important;
+    top: 100%;
+    left: 0;
+    min-width: 240px;
+    z-index: 9000 !important;
+    background: #fff !important;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 16px 40px rgba(45, 20, 84, 0.18);
+  }
+  .nav-group {
+    position: relative;
+  }
+  .mobile-apply {
+    display: none !important;
+  }
+  .menu-button {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .menu-button {
+    display: flex !important;
+  }
+  .main-nav:not(.is-open) {
+    display: none !important;
+  }
+  .main-nav.is-open {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .main-nav.is-open .nav-dropdown {
+    display: block !important;
+    position: static !important;
+    box-shadow: none !important;
+    margin: 4px 0 12px !important;
+  }
+  .main-nav.is-open a,
+  .main-nav.is-open button {
+    pointer-events: auto !important;
+  }
+}
+
+/* Touch targets */
+.main-nav a,
+.nav-dropdown a,
+.nav-home-item {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}

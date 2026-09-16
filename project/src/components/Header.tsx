@@ -197,12 +197,20 @@ export function Header() {
               }}
             >
               <a
+                href={group.items[0].path}
                 className={isActive(group) ? 'nav-active' : ''}
                 onClick={(e) => {
                   e.preventDefault();
-                  if (group.items.length > 1 && window.matchMedia('(max-width: 700px)').matches) {
+                  e.stopPropagation();
+                  const isNarrow = window.matchMedia('(max-width: 900px)').matches;
+                  if (group.items.length > 1 && isNarrow) {
                     setOpenDropdown(openDropdown === group.label ? null : group.label);
+                  } else if (group.items.length > 1 && !isNarrow) {
+                    // desktop: navigate to overview (first item)
+                    setMenuOpen(false);
+                    go(group.items[0].path);
                   } else {
+                    setMenuOpen(false);
                     go(group.items[0].path);
                   }
                 }}
@@ -215,9 +223,13 @@ export function Header() {
                   {group.items.map((item) => (
                     <a
                       key={item.path}
+                      href={item.path}
                       className={path === item.path ? 'dropdown-active' : ''}
                       onClick={(e) => {
                         e.preventDefault();
+                        e.stopPropagation();
+                        setMenuOpen(false);
+                        setOpenDropdown(null);
                         go(item.path);
                       }}
                     >
