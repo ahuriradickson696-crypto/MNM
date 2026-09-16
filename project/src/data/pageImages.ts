@@ -190,4 +190,3 @@ export const pageImages = {
   gallery: allGallery,
 };
 
-export { allGallery };
