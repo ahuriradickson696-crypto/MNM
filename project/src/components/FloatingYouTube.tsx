@@ -1,16 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ALL_SITE_VIDEOS, ytPlayerSrc } from '@/data/siteVideos';
 import { Volume2, VolumeX, X, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
 
-const VIDEOS = [
-  { id: 'XPQdBYI9vcU', label: '1' },
-  { id: 'qqWsn74VlT0', label: '2' },
-  { id: 'cQWuuKjoh44', label: '3' },
-  { id: 'aTqd3eX377U', label: '4' },
-  { id: 'gOdpEUC96vY', label: '5' },
-  { id: '7bcnZQhDfzM', label: '6' },
-  { id: 'AS6sHqFZek4', label: '7' },
-  { id: '-Z3M-jtCSDU', label: '8' },
-];
+const VIDEOS = ALL_SITE_VIDEOS.map((v) => ({ id: v.id, label: v.title }));
 
 type Pos = { x: number; y: number };
 
@@ -129,7 +121,7 @@ export function FloatingYouTube() {
   const vid = VIDEOS[active];
   const muteParam = muted ? 1 : 0;
   // playsinline=1 is critical for iPhone
-  const embedSrc = `https://www.youtube.com/embed/${vid.id}?autoplay=1&mute=${muteParam}&loop=1&playlist=${vid.id}&controls=1&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
+  const embedSrc = ytPlayerSrc(vid.id, { mute: muted, controls: true });
 
   return (
     <div
@@ -144,7 +136,7 @@ export function FloatingYouTube() {
         <span className="yt-drag-handle" title="Drag to move">
           <GripVertical size={16} />
         </span>
-        <span className="yt-floating-title">Campus videos</span>
+        <span className="yt-floating-title" title={vid.label}>{vid.label || "Campus videos"}</span>
         <button type="button" aria-label={muted ? 'Unmute' : 'Mute'} onClick={() => setMuted((m) => !m)}>
           {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
         </button>
@@ -175,6 +167,7 @@ export function FloatingYouTube() {
                 type="button"
                 className={i === active ? 'is-active' : ''}
                 onClick={() => setActive(i)}
+                title={v.label}
               >
                 {i + 1}
               </button>

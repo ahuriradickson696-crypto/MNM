@@ -9,8 +9,7 @@ import {
   type GalleryItem,
 } from '@/data/galleryMedia';
 import { TikTokEmbed } from '@/components/TikTokEmbed';
-
-const YOUTUBE_IDS = ['XPQdBYI9vcU', 'qqWsn74VlT0', 'cQWuuKjoh44', 'aTqd3eX377U', 'gOdpEUC96vY'];
+import { ALL_SITE_VIDEOS, ytPlayerSrc } from '@/data/siteVideos';
 
 export function Gallery() {
   const [filter, setFilter] = useState<string>('all');
@@ -25,12 +24,11 @@ export function Gallery() {
   }, [filter]);
 
   const photos = items.filter((i): i is Extract<GalleryItem, { type: 'photo' }> => i.type === 'photo');
-  const videos = items.filter((i): i is Extract<GalleryItem, { type: 'tiktok' }> => i.type === 'tiktok');
+  const tiktoks = items.filter((i): i is Extract<GalleryItem, { type: 'tiktok' }> => i.type === 'tiktok');
 
-  // Auto-advance YouTube every 45s
   useEffect(() => {
     timerRef.current = window.setInterval(() => {
-      setYtIndex((i) => (i + 1) % YOUTUBE_IDS.length);
+      setYtIndex((i) => (i + 1) % ALL_SITE_VIDEOS.length);
     }, 45000);
     return () => {
       if (timerRef.current) window.clearInterval(timerRef.current);
@@ -41,40 +39,40 @@ export function Gallery() {
     document.title = 'Gallery | Avance International University';
   }, []);
 
-  const ytId = YOUTUBE_IDS[ytIndex];
-  const mute = muted ? 1 : 0;
+  const current = ALL_SITE_VIDEOS[ytIndex];
 
   return (
     <div className="page-content">
       <PageHero
-videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) || pageImages.home}
+        videos={videosFor('gallery')}
+        images={pageImages.gallery?.slice?.(0, 6) || pageImages.home}
         eyebrow="Media gallery"
         title={
           <>
             Campus <em>media</em>
           </>
         }
-        subtitle="YouTube campus videos first, then photos, then TikTok."
+        subtitle="All official YouTube videos, campus photos, then TikTok."
       />
 
       <section className="section-pad">
-        {/* YOUTUBE FIRST */}
         <div className="section-heading">
           <div>
             <div className="eyebrow">
-              <span className="eyebrow-line" /> YouTube
+              <span className="eyebrow-line" /> YouTube · all videos
             </div>
             <h2>
-              Campus <em>videos.</em>
+              Every AVIU <em>video</em>
             </h2>
+            <p className="section-lead">{ALL_SITE_VIDEOS.length} official videos — select any below.</p>
           </div>
         </div>
 
         <div className="gallery-youtube-player">
           <iframe
-            key={`${ytId}-${mute}`}
-            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=${mute}&playsinline=1&rel=0&modestbranding=1&controls=1`}
-            title="AVIU campus video"
+            key={`${current.id}-${muted}`}
+            src={ytPlayerSrc(current.id, { mute: muted, controls: true })}
+            title={current.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
           />
@@ -83,20 +81,32 @@ videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) 
               {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
               <span>{muted ? 'Unmute' : 'Mute'}</span>
             </button>
-            <div className="gallery-youtube-tabs">
-              {YOUTUBE_IDS.map((id, i) => (
-                <button
-                  key={id}
-                  type="button"
-                  className={i === ytIndex ? 'is-active' : ''}
-                  onClick={() => setYtIndex(i)}
-                >
-                  Video {i + 1}
-                </button>
-              ))}
-            </div>
-            <span className="gallery-youtube-hint">Auto-plays next every 45s</span>
+            <span className="gallery-youtube-hint">
+              {current.title} · Auto-next every 45s
+            </span>
           </div>
+        </div>
+
+        <div className="gallery-all-videos-grid">
+          {ALL_SITE_VIDEOS.map((v, i) => (
+            <button
+              key={v.id}
+              type="button"
+              className={`gallery-yt-card ${i === ytIndex ? 'is-active' : ''}`}
+              onClick={() => setYtIndex(i)}
+            >
+              <div className="gallery-yt-thumb">
+                <img
+                  src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`}
+                  alt=""
+                  loading="lazy"
+                />
+                <span className="gallery-yt-play">▶</span>
+              </div>
+              <strong>{v.title}</strong>
+              <span>{v.group}</span>
+            </button>
+          ))}
         </div>
 
         <div className="gallery-filters" role="tablist" aria-label="Gallery categories" style={{ marginTop: 40 }}>
@@ -116,10 +126,9 @@ videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) 
 
         <p className="results-count" style={{ marginTop: 16 }}>
           {photos.length} photo{photos.length !== 1 ? 's' : ''}
-          {videos.length > 0 ? ` · ${videos.length} TikTok${videos.length !== 1 ? 's' : ''}` : ''}
+          {tiktoks.length > 0 ? ` · ${tiktoks.length} TikTok` : ''}
         </p>
 
-        {/* PHOTOS */}
         {photos.length > 0 && (
           <>
             <div className="section-heading" style={{ marginTop: 28 }}>
@@ -149,8 +158,7 @@ videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) 
           </>
         )}
 
-        {/* TIKTOK LAST */}
-        {videos.length > 0 && (
+        {tiktoks.length > 0 && (
           <>
             <div className="section-heading" style={{ marginTop: 48 }}>
               <div>
@@ -163,7 +171,7 @@ videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) 
               </div>
             </div>
             <div className="tiktok-gallery-grid">
-              {videos.map((v) => (
+              {tiktoks.map((v) => (
                 <div key={v.id} className="tiktok-gallery-card">
                   <TikTokEmbed item={v} />
                 </div>

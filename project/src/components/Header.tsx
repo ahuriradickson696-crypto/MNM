@@ -139,20 +139,23 @@ export function Header() {
 
   return (
     <>
-      <div className="announcement">
-        <span className="announcement-dot" />
+      <div
+        className="announcement announcement-full"
+        key={announcementIndex}
+        style={{
+          backgroundImage: `linear-gradient(90deg, rgba(20,9,42,0.88) 0%, rgba(45,20,84,0.75) 45%, rgba(20,9,42,0.85) 100%), url(${announcements[announcementIndex].image})`,
+        }}
+      >
         <span className="announcement-date">{currentDate}</span>
-        <span className="announcement-divider" />
-        <span className="announcement-ad" key={announcementIndex}>
-          <img src={announcements[announcementIndex].image} alt="" className="announcement-ad-img" width={48} height={32} />
-          <span className="announcement-text">{announcements[announcementIndex].text}</span>
-        </span>
-        {!isHome && (
-          <button type="button" className="announcement-home-btn" onClick={goHome} aria-label="Go to home page">
-            Home
-          </button>
-        )}
-        <button onClick={openApply}>Apply now</button>
+        <span className="announcement-text announcement-text-strong">{announcements[announcementIndex].text}</span>
+        <div className="announcement-actions">
+          {!isHome && (
+            <button type="button" className="announcement-home-btn" onClick={goHome} aria-label="Go to home page">
+              Home
+            </button>
+          )}
+          <button type="button" className="announcement-apply-btn" onClick={openApply}>Apply now</button>
+        </div>
       </div>
       <header
         className="header"
