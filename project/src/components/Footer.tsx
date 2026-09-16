@@ -48,8 +48,8 @@ export function Footer() {
             <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><Twitter size={15} /></a>
             <a href="https://ug.linkedin.com/company/avance-international-university" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin size={15} /></a>
             <a href="https://www.facebook.com/avanceinternationaluniversity" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook size={15} /></a>
-            <a href="https://www.tiktok.com/@avancestudentpulse" target="_blank" rel="noopener noreferrer" aria-label="TikTok Student Pulse"><Music2 size={15} /></a>
-            <a href="https://www.tiktok.com/@avance.marketing" target="_blank" rel="noopener noreferrer" aria-label="TikTok Marketing"><Music2 size={15} /></a>
+            <a href="https://www.tiktok.com/@avance_iu_uganda" target="_blank" rel="noopener noreferrer" aria-label="TikTok Student Pulse"><Music2 size={15} /></a>
+            <a href="https://www.tiktok.com/@avance_iu_uganda" target="_blank" rel="noopener noreferrer" aria-label="TikTok Marketing"><Music2 size={15} /></a>
           </div>
         </div>
         <div className="footer-links">

@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { PageHero } from '@/components/PageHero';
 import { pageImages } from '@/data/pageImages';
+import { videosFor } from '@/data/pageVideos';
 import {
   galleryFeed,
   galleryCategories,
@@ -9,7 +10,7 @@ import {
 } from '@/data/galleryMedia';
 import { TikTokEmbed } from '@/components/TikTokEmbed';
 
-const YOUTUBE_IDS = ['7bcnZQhDfzM', 'AS6sHqFZek4', '-Z3M-jtCSDU'];
+const YOUTUBE_IDS = ['XPQdBYI9vcU', 'qqWsn74VlT0', 'cQWuuKjoh44', 'aTqd3eX377U', 'gOdpEUC96vY'];
 
 export function Gallery() {
   const [filter, setFilter] = useState<string>('all');
@@ -46,7 +47,7 @@ export function Gallery() {
   return (
     <div className="page-content">
       <PageHero
-        images={pageImages.gallery?.slice?.(0, 6) || pageImages.home}
+videos={videosFor('gallery')}         images={pageImages.gallery?.slice?.(0, 6) || pageImages.home}
         eyebrow="Media gallery"
         title={
           <>

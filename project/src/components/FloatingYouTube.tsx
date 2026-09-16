@@ -2,9 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Volume2, VolumeX, X, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
 
 const VIDEOS = [
-  { id: '7bcnZQhDfzM', label: 'Campus 1' },
-  { id: 'AS6sHqFZek4', label: 'Campus 2' },
-  { id: '-Z3M-jtCSDU', label: 'Campus 3' },
+  { id: 'XPQdBYI9vcU', label: 'Installation' },
+  { id: 'qqWsn74VlT0', label: 'VC message' },
+  { id: 'cQWuuKjoh44', label: 'Facilities' },
+  { id: 'aTqd3eX377U', label: 'Faculty' },
+  { id: 'gOdpEUC96vY', label: 'Update' },
 ];
 
 type Pos = { x: number; y: number };

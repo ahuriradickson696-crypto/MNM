@@ -1,5 +1,6 @@
 import { ArrowRight, Monitor, BriefcaseBusiness, GraduationCap, Clock } from 'lucide-react';
 import { SubPageHero } from '@/components/SubPageHero';
+import { videosFor } from '@/data/pageVideos';
 import { useRouter } from '@/router/Router';
 import { BackgroundCarousel } from '@/components/BackgroundCarousel';
 import { pageImages } from '@/data/pageImages';
@@ -30,7 +31,7 @@ export function OnlineLearning() {
   return (
     <div className="page-content">
       <SubPageHero
-        images={pageImages.study}
+videos={videosFor('study')}         images={pageImages.study}
         eyebrow="Flexible learning"
         title={<>Online &amp; <em>Continuing Education</em></>}
         subtitle="Study on your schedule with our flexible online, part-time, and continuing education options. Whether you are a working professional, a remote learner, or seeking to upskill, we have a pathway for you."
@@ -118,7 +119,7 @@ export function OnlineLearning() {
       </section>
 
       <section className="cta-section">
-        <BackgroundCarousel images={pageImages.study} overlay={0.88} />
+        <BackgroundCarousel images={pageImages.study} overlay={0.88}  videos={videosFor('study')} />
         <div>
           <div className="eyebrow eyebrow-light"><span className="eyebrow-line" /> Start learning</div>
           <h2>Find your flexible pathway.</h2>

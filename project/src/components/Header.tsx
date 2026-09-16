@@ -172,7 +172,18 @@ export function Header() {
             <small>INTERNATIONAL UNIVERSITY</small>
           </span>
         </a>
-        <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`}>
+        <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
+          <div className="nav-logo-bg" aria-hidden="true">
+            <img src="/images/aviu-logo-full.png" alt="" />
+          </div>
+          <div className="nav-mobile-panel">
+            <div className="nav-mobile-brand">
+              <img src="/images/aviu-logo.png" alt="" width={48} height={48} />
+              <div>
+                <strong>AVANCE</strong>
+                <small>International University</small>
+              </div>
+            </div>
           <button type="button" className="nav-home-item" onClick={() => go('/')} style={{ fontWeight: 700, marginRight: 8 }}>Home</button>
           {navGroups.map((group) => (
             <div
@@ -217,6 +228,7 @@ export function Header() {
           <button className="nav-apply mobile-apply" onClick={openApply}>
             Apply to AVIU
           </button>
+          </div>
         </nav>
         <div className="header-actions">
           <button
