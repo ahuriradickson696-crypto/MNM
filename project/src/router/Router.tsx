@@ -11,8 +11,14 @@ const RouterContext = createContext<RouterContextType>({
 });
 
 function normalizePath(raw: string): string {
+  try {
+    raw = decodeURIComponent(raw);
+  } catch { /* ignore */ }
   let p = raw.split('?')[0].split('#')[0] || '/';
+  p = p.trim() || '/';
   if (!p.startsWith('/')) p = '/' + p;
+  // collapse double slashes
+  p = p.replace(/\/+/g, '/');
   if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1);
   return p || '/';
 }

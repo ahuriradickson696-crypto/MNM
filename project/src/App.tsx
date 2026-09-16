@@ -176,7 +176,7 @@ function Routes() {
       <DocumentHead />
       <a href="#main-content" className="skip-to-content">Skip to main content</a>
       <Header />
-      <main id="main-content">{renderPage()}</main>
+      <main id="main-content" style={{ minHeight: "50vh" }}>{renderPage()}</main>
       <FloatingYouTube />
       <PwaInstall />
       <Footer />

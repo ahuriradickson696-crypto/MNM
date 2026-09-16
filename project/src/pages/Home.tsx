@@ -1,75 +1,62 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Play, Globe2, Check, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { ArrowRight, Globe2, Check, Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { faculties, homeStats, testimonials, universityInfo, newsItems, events, partners } from '@/data/university';
 import { useRouter } from '@/router/Router';
 import { useApply } from '@/components/ApplyContext';
-import { pageImages } from '@/data/pageImages';
-import { homeSlideVideos, youtubeBgSrc, AVIU_VIDEOS } from '@/data/pageVideos';
+import { allGallery } from '@/data/pageImages';
+import { AVIU_VIDEOS, youtubeBgSrc } from '@/data/pageVideos';
 
-/** Official campus / leadership videos — muted autoplay, playsinline */
-const CAMPUS_VIDEOS = [
+/** Home shows only 2 videos: university campus + graduation / ceremony */
+const HOME_VIDEOS = [
   {
-    id: 'XPQdBYI9vcU',
-    title: 'Bishop Ssebagala Installation',
-    blurb: 'Installation ceremony — leadership and faith at AVIU',
+    id: AVIU_VIDEOS.facilities,
+    title: 'University campus & facilities',
+    blurb: 'Tour Avance International University — facilities and campus life',
   },
   {
-    id: 'qqWsn74VlT0',
-    title: 'VC on the uniqueness of Avance',
-    blurb: 'Dr. Kato Kinata Joshua on what sets AVIU apart',
-  },
-  {
-    id: 'cQWuuKjoh44',
-    title: 'Campus facilities & discussion',
-    blurb: 'Full campus facilities walkthrough and dialogue',
-  },
-  {
-    id: 'aTqd3eX377U',
-    title: 'Faculty & programme highlights',
-    blurb: 'Faculty and physiology programme highlights',
-  },
-  {
-    id: 'gOdpEUC96vY',
-    title: 'University media update',
-    blurb: 'Latest official university media update',
+    id: AVIU_VIDEOS.installation,
+    title: 'Graduation & university ceremony',
+    blurb: 'Formal university ceremony — leadership and celebration at AVIU',
   },
 ];
 
+/** Ads: photos + short messages (image-led, as discussed) */
 const AD_SLIDES = [
   {
-    video: homeSlideVideos[0],
     image: '/images/graduation-ceremony.jpg',
-    eyebrow: 'Leadership · Ceremony',
-    title: 'Bishop Ssebagala Installation',
-    text: 'Watch the installation ceremony — faith, leadership and community at AVIU.',
+    eyebrow: 'Graduation · 25 September',
+    title: 'Celebrate every year',
+    text: 'University-wide graduation on 25 September — all faculties.',
   },
   {
-    video: homeSlideVideos[1],
-    image: '/images/campus-aviu-students-1.jpg',
-    eyebrow: 'From the Vice Chancellor',
-    title: 'What makes Avance unique',
-    text: 'Dr. Kato Kinata Joshua on the distinctives of Avance International University.',
+    image: '/images/graduates-group.jpg',
+    eyebrow: 'Our graduands',
+    title: 'Proud AVIU graduates',
+    text: 'Join a community of alumni making an impact across the region.',
   },
   {
-    video: homeSlideVideos[2],
     image: '/images/campus-building.jpg',
-    eyebrow: 'Campus life',
-    title: 'Facilities & discussion',
-    text: 'Full campus facilities walkthrough and academic dialogue.',
+    eyebrow: 'Campus',
+    title: 'Nabweru · Wakiso',
+    text: 'Modern teaching spaces on our university campus.',
   },
   {
-    video: homeSlideVideos[3],
-    image: '/images/classroom-students.jpg',
-    eyebrow: 'Academics',
-    title: 'Faculty & programme highlights',
-    text: 'Faculty and programme showcases — including health sciences pathways.',
+    image: '/images/campus-aviu-students-1.jpg',
+    eyebrow: 'Admissions open',
+    title: 'January · May · August · September',
+    text: '25 NCHE-accredited bachelor programmes. Apply today.',
   },
   {
-    video: homeSlideVideos[4],
+    image: '/images/graduation-crowd.jpg',
+    eyebrow: 'Ceremony',
+    title: 'Families welcome',
+    text: 'Graduation day is for students, families and guests.',
+  },
+  {
     image: '/images/university-gate.jpg',
-    eyebrow: 'AVIU media',
-    title: 'University update',
-    text: 'Latest official media from Avance International University.',
+    eyebrow: 'Visit us',
+    title: 'Experience AVIU',
+    text: '+256 700 670 691 · admissions@aviu.ac.ug',
   },
 ];
 
@@ -81,43 +68,38 @@ export function Home() {
   const { navigate } = useRouter();
   const { openApply } = useApply();
   const [adIndex, setAdIndex] = useState(0);
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const photos = allGallery.length ? allGallery : AD_SLIDES.map((a) => a.image);
 
   useEffect(() => {
-    const t = window.setInterval(() => {
-      setAdIndex((i) => (i + 1) % AD_SLIDES.length);
-    }, 7000);
-    return () => window.clearInterval(t);
-  }, []);
+    const a = window.setInterval(() => setAdIndex((i) => (i + 1) % AD_SLIDES.length), 6000);
+    const p = window.setInterval(() => setPhotoIndex((i) => (i + 1) % photos.length), 4500);
+    return () => {
+      window.clearInterval(a);
+      window.clearInterval(p);
+    };
+  }, [photos.length]);
 
   const ad = AD_SLIDES[adIndex];
 
   return (
-    <div className="page-content home-premium">
-      {/* ========== SPLIT HERO ========== */}
-      <section className="split-hero" aria-label="Avance International University">
-        {/* LEFT — institutional content */}
-        <div className="split-hero-main">
-          <div className="split-hero-main-video" aria-hidden="true">
-            <iframe
-              src={youtubeBgSrc(AVIU_VIDEOS.facilities)}
-              title="Campus background"
-              allow="autoplay; encrypted-media"
-            />
-          </div>
+    <div className="page-content home-premium home-lively">
+      {/* ===== SPLIT HERO — white + purple, lively ===== */}
+      <section className="split-hero split-hero-light" aria-label="Avance International University">
+        <div className="split-hero-main split-hero-main-light">
           <div className="split-hero-main-inner">
-            <p className="split-eyebrow">
+            <p className="split-eyebrow split-eyebrow-dark">
               <span className="split-eyebrow-line" />
               Avance International University · Nabweru, Uganda
             </p>
-            <h1 className="split-title">
+            <h1 className="split-title split-title-dark">
               Enhancing <em>innovations.</em>
               <br />
               Building futures.
             </h1>
-            <p className="split-lead">
-              A modern private university with <strong>25 NCHE-accredited</strong> bachelor programmes
-              across Education, Business, Computing, and Health Sciences. English-medium teaching,
-              international students welcome, graduation every <strong>25 September</strong>.
+            <p className="split-lead split-lead-dark">
+              A modern private university with <strong>25 NCHE-accredited</strong> bachelor programmes.
+              International students welcome. Graduation every <strong>25 September</strong>.
             </p>
 
             <div className="split-actions">
@@ -126,21 +108,21 @@ export function Home() {
               </button>
               <button
                 type="button"
-                className="btn-premium-ghost"
+                className="btn-premium-outline"
                 onClick={() => navigate('/study/course-finder')}
               >
                 Browse programmes
               </button>
               <button
                 type="button"
-                className="btn-premium-ghost"
+                className="btn-premium-outline"
                 onClick={() => navigate('/admissions/international')}
               >
                 <Globe2 size={16} /> International
               </button>
             </div>
 
-            <div className="split-stats">
+            <div className="split-stats split-stats-light">
               {homeStats.map((s) => (
                 <div key={s.label} className="split-stat">
                   <strong>{s.value}</strong>
@@ -149,48 +131,28 @@ export function Home() {
               ))}
             </div>
 
-            <div className="split-social">
+            <div className="split-social split-social-dark">
               <span className="split-social-label">Follow AVIU</span>
-              <a
-                href="https://x.com/AvanceIU_uganda"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="split-social-link"
-              >
+              <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer" className="split-social-link">
                 X · @AvanceIU_uganda
               </a>
-              <a
-                href="https://www.tiktok.com/@avance_iu_uganda"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="split-social-link"
-              >
+              <a href="https://www.tiktok.com/@avance_iu_uganda" target="_blank" rel="noopener noreferrer" className="split-social-link">
                 TikTok · @avance_iu_uganda
               </a>
             </div>
           </div>
         </div>
 
-        {/* RIGHT — full-bleed rotating ad panel */}
+        {/* RIGHT — photo ads (all graduation / campus images cycle) */}
         <aside className="split-hero-ads" aria-label="University highlights">
           {AD_SLIDES.map((slide, i) => (
             <div
               key={slide.title}
               className={`split-ad-slide ${i === adIndex ? 'is-active' : ''}`}
-            >
-              {i === adIndex ? (
-                <iframe
-                  className="split-ad-video"
-                  src={youtubeBgSrc(slide.video)}
-                  title={slide.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                />
-              ) : (
-                <div className="split-ad-fallback" style={{ backgroundImage: `url(${slide.image})` }} />
-              )}
-            </div>
+              style={{ backgroundImage: `url(${slide.image})` }}
+            />
           ))}
-          <div className="split-ad-overlay" />
+          <div className="split-ad-overlay split-ad-overlay-strong" />
           <div className="split-ad-content">
             <p className="split-ad-eyebrow">{ad.eyebrow}</p>
             <h2 className="split-ad-title">{ad.title}</h2>
@@ -215,19 +177,88 @@ export function Home() {
         </aside>
       </section>
 
-      {/* ========== PROGRAMME HIGHLIGHTS ========== */}
-      <section className="section-pad home-faculties">
+      {/* ===== FULL PHOTO SLIDER — all campus images ===== */}
+      <section className="home-photo-strip" aria-label="Campus photo slider">
+        <div className="home-photo-strip-head">
+          <div className="eyebrow">
+            <span className="eyebrow-line" /> Campus gallery
+          </div>
+          <h2>
+            Life at <em>AVIU</em> — all photos
+          </h2>
+        </div>
+        <div className="home-photo-stage">
+          {photos.map((src, i) => (
+            <div
+              key={src + i}
+              className={`home-photo-slide ${i === photoIndex ? 'is-active' : ''}`}
+              style={{ backgroundImage: `url(${src})` }}
+            />
+          ))}
+          <div className="home-photo-stage-overlay" />
+          <div className="home-photo-stage-label">
+            {photoIndex + 1} / {photos.length}
+          </div>
+        </div>
+        <div className="home-photo-thumbs">
+          {photos.map((src, i) => (
+            <button
+              key={src + 't' + i}
+              type="button"
+              className={i === photoIndex ? 'is-active' : ''}
+              style={{ backgroundImage: `url(${src})` }}
+              onClick={() => setPhotoIndex(i)}
+              aria-label={`Photo ${i + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ===== 2 VIDEOS ONLY: university + graduation/ceremony ===== */}
+      <section className="home-two-videos section-pad">
         <div className="section-heading">
           <div>
             <div className="eyebrow">
-              <span className="eyebrow-line" /> Academic excellence
+              <span className="eyebrow-line" /> Watch
+            </div>
+            <h2>
+              University &amp; <em>graduation</em>
+            </h2>
+            <p className="section-lead">Two featured videos — campus life and formal ceremony.</p>
+          </div>
+        </div>
+        <div className="home-two-videos-grid">
+          {HOME_VIDEOS.map((v) => (
+            <div key={v.id} className="home-video-card home-video-card-lg">
+              <div className="home-video-frame">
+                <iframe
+                  src={ytEmbed(v.id)}
+                  title={v.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                  allowFullScreen
+                />
+              </div>
+              <div className="home-video-meta">
+                <div>
+                  <strong>{v.title}</strong>
+                  <span>{v.blurb}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Faculties */}
+      <section className="section-pad alt-bg">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">
+              <span className="eyebrow-line" /> Academics
             </div>
             <h2>
               Faculties built for <em>impact.</em>
             </h2>
-            <p className="section-lead">
-              Explore NCHE-accredited pathways designed for local and international careers.
-            </p>
           </div>
           <button type="button" className="button button-outline" onClick={() => navigate('/study')}>
             All programmes <ArrowRight size={16} />
@@ -250,8 +281,8 @@ export function Home() {
         </div>
       </section>
 
-      {/* ========== WHY AVIU ========== */}
-      <section className="section-pad alt-bg">
+      {/* Why */}
+      <section className="section-pad">
         <div className="two-col premium-two-col">
           <div>
             <div className="eyebrow">
@@ -265,7 +296,7 @@ export function Home() {
                 <Check size={16} /> 25 NCHE-accredited bachelor programmes
               </li>
               <li>
-                <Check size={16} /> English as the medium of instruction
+                <Check size={16} /> English medium of instruction
               </li>
               <li>
                 <Check size={16} /> Intakes: January, May, August, September
@@ -276,23 +307,20 @@ export function Home() {
               <li>
                 <Check size={16} /> International admissions support
               </li>
-              <li>
-                <Check size={16} /> Campus in Nabweru, Wakiso District
-              </li>
             </ul>
             <button type="button" className="button" onClick={() => navigate('/admissions')} style={{ marginTop: 20 }}>
-              Admissions overview <ArrowRight size={16} />
+              Admissions <ArrowRight size={16} />
             </button>
           </div>
           <div className="premium-image-stack">
-            <img src="/images/campus-building.jpg" alt="AVIU campus" />
-            <img src="/images/classroom-discussion.jpg" alt="Students in class" />
+            <img src="/images/graduates-laughing.jpg" alt="AVIU graduates" />
+            <img src="/images/campus-aviu-students-2.jpg" alt="Students on campus" />
           </div>
         </div>
       </section>
 
-      {/* ========== NEWS & EVENTS ========== */}
-      <section className="section-pad">
+      {/* News */}
+      <section className="section-pad alt-bg">
         <div className="section-heading">
           <div>
             <div className="eyebrow">
@@ -325,8 +353,8 @@ export function Home() {
         </div>
       </section>
 
-      {/* ========== PARTNERS ========== */}
-      <section className="section-pad alt-bg">
+      {/* Partners */}
+      <section className="section-pad">
         <div className="section-heading">
           <div>
             <div className="eyebrow">
@@ -351,9 +379,8 @@ export function Home() {
         </div>
       </section>
 
-      {/* ========== TESTIMONIALS ========== */}
       {testimonials?.length > 0 && (
-        <section className="section-pad">
+        <section className="section-pad alt-bg">
           <div className="section-heading">
             <div>
               <div className="eyebrow">
@@ -378,58 +405,11 @@ export function Home() {
         </section>
       )}
 
-      {/* ========== BOTTOM AUTO-PLAY VIDEO FEED ========== */}
-      <section className="home-video-feed" aria-label="University videos">
-        <div className="home-video-feed-head">
-          <div>
-            <div className="eyebrow eyebrow-light">
-              <span className="eyebrow-line" /> Watch AVIU
-            </div>
-            <h2>Campus, leadership &amp; programmes</h2>
-            <p>Muted autoplay · Unmute on YouTube or in the floating player · Works on mobile</p>
-          </div>
-          <div className="home-video-social">
-            <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer">
-              @AvanceIU_uganda <ExternalLink size={14} />
-            </a>
-            <a href="https://www.tiktok.com/@avance_iu_uganda" target="_blank" rel="noopener noreferrer">
-              @avance_iu_uganda <ExternalLink size={14} />
-            </a>
-          </div>
-        </div>
-        <div className="home-video-track">
-          {CAMPUS_VIDEOS.map((v) => (
-            <div key={v.id} className="home-video-card">
-              <div className="home-video-frame">
-                <iframe
-                  src={ytEmbed(v.id)}
-                  title={v.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
-              <div className="home-video-meta">
-                <Play size={14} />
-                <div>
-                  <strong>{v.title}</strong>
-                  <span>{v.blurb}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ========== CTA ========== */}
       <section className="cta-section premium-cta">
-        <div className="premium-cta-bg premium-cta-video">
-          <iframe
-            src={youtubeBgSrc(AVIU_VIDEOS.mediaUpdate)}
-            title="CTA background"
-            allow="autoplay; encrypted-media"
-          />
-        </div>
+        <div
+          className="premium-cta-bg"
+          style={{ backgroundImage: 'url(/images/graduation-ceremony.jpg)' }}
+        />
         <div className="premium-cta-overlay" />
         <div className="premium-cta-inner">
           <div className="eyebrow eyebrow-light">
@@ -437,8 +417,7 @@ export function Home() {
           </div>
           <h2>Make your move.</h2>
           <p>
-            Join {universityInfo.name}. Our admissions team is ready to guide you — locally and
-            internationally.
+            Join {universityInfo.name}. Admissions is ready to guide you — locally and internationally.
           </p>
           <div className="split-actions" style={{ justifyContent: 'center' }}>
             <button type="button" className="btn-premium light" onClick={openApply}>
@@ -447,6 +426,14 @@ export function Home() {
             <button type="button" className="btn-premium-ghost light" onClick={() => navigate('/contact')}>
               Contact us
             </button>
+          </div>
+          <div className="home-video-social" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <a href="https://x.com/AvanceIU_uganda" target="_blank" rel="noopener noreferrer">
+              @AvanceIU_uganda <ExternalLink size={14} />
+            </a>
+            <a href="https://www.tiktok.com/@avance_iu_uganda" target="_blank" rel="noopener noreferrer">
+              @avance_iu_uganda <ExternalLink size={14} />
+            </a>
           </div>
         </div>
       </section>
